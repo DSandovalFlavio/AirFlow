@@ -127,3 +127,17 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# aiflow logs
+airflow/logs
+airflow/airflow-scheduler.err
+airflow/airflow-scheduler.log
+airflow/airflow-scheduler.out
+airflow/airflow-scheduler.pid
+airflow/airflow-webserver-monitor.pid
+airflow/airflow-webserver.err
+airflow/airflow-webserver.out
+airflow/airflow-webserver.pid
+airflow/airflow.db
+airflow/airflow.cfg
+airflow/webserver_config.py
