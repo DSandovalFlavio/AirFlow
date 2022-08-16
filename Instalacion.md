@@ -30,3 +30,26 @@ Pasos para instalar Apache Airflow en WSL:
 - Instalamos Apache Airflow
 
         pip install "apache-airflow==2.2.3" --constraint "https://raw.githubusercontent.com/apache/airflow/constraints-2.2.3/constraints-no-providers-3.9.txt"
+
+- Ejecutamos Apache Airflow
+
+        airflow db init
+
+- Creamos el usuario airflow
+
+        airflow users create \ 
+            --username admin \
+            --firstname <FirstName> \
+            --lastname <LastName> \
+            --role Admin \
+            --email <YourEmail>
+
+- Iniciamos Apache Airflow
+
+        airflow webserver -D
+
+        airflow scheduler -D
+
+Ahora ya podemos ingresar a la aplicacion de Apache Airflow.
+
+        http://localhost:8080
