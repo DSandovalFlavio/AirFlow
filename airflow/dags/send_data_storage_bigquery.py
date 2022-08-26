@@ -5,42 +5,57 @@ from airflow import DAG
 from airflow.utils.dates import days_ago
 
 # Librerias Google Cloud Storage y BigQuery
-from google.providers.cloud.transfers.gcs_to_bq import GoogleCloudStorageToBigQueryOperator
-from google.providers.cloud.operators.bigquery import BigQueryExecuteQueryOperator
+from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
+from airflow.providers.google.cloud.operators.bigquery import BigQueryExecuteQueryOperator
+
 
 default_args = {
     'owner': 'admin',
-    'start_date': days_ago(7),
+    'start_date': days_ago(7)
 }
 
 dag_args = {
     'dag_id': 'send_data_storage_bigquery',
     'schedule_interval': '@daily',
     'catchup': False,
-    default_args: default_args
+    'default_args': default_args
 }
 
 with DAG(**dag_args) as dag:
     
-    gcs_to_bq = GoogleCloudStorageToBigQueryOperator(
+    gcs_to_bq = GCSToBigQueryOperator(
         task_id='cargar_datos_gcs_bq',
         bucket='main_buckets_airflow',
         source_objects=['*'],
         source_format='CSV',
         skip_leading_rows=1,
         field_delimiter=';',
-        destination_project_dataset_table='noble-conduit-355722.working_dataset_airflow.retail_data',
+        destination_project_dataset_table='noble-conduit-355722.working_dataset_airflow.retail_years',
         create_disposition='CREATE_IF_NEEDED',
         write_disposition='WRITE_APPEND',
-        bigquery_conn_id='google_cloud_default',
-        google_cloud_storage_conn_id='google_cloud_default',
+        gcp_conn_id='google_cloud_default2',
     )
-    bq_query = BigQueryExecuteQueryOperator(
-        task_id='bq_query',
-        sql='{{ var.value.sql }}',
-        destination_dataset_table='{{ var.value.destination_dataset_table }}',
+    
+    query = (
+        '''
+        SELECT 'year', 'area' ROUND(AVG('total_inc), 4) AS avg_income
+        FROM 'noble-conduit-355722.working_dataset_airflow.retail_years'
+        GROUP BY 'year', 'area'
+        GROUP BY 'year', 'area'
+        '''
+    )
+    
+    tabla_resultados = BigQueryExecuteQueryOperator(
+        task_id='tabla_resultados',
+        sql=query,
+        destination_dataset_table='noble-conduit-355722.working_dataset_airflow.retail_years_resultados',
         write_disposition='WRITE_TRUNCATE',
-        dag=dag
+        create_disposition='CREATE_IF_NEEDED',
+        use_legacy_sql=False,
+        location='us-central1 ',
+        gcp_conn_id='google_cloud_default2'
     )
-    gcs_to_bq >> bq_query
+    
+    # Dependencias
+    gcs_to_bq >> tabla_resultados
 

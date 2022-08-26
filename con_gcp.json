@@ -1,0 +1,14 @@
+{
+  "google_cloud_default2": {
+    "conn_type": "google_cloud_platform",
+    "description": "",
+    "host": "",
+    "login": "",
+    "password": "",
+    "schema": "default",
+    "port": null,
+    "extra": {"extra__google_cloud_platform__key_path" : "./secrets/gcpkey.json", 
+              "extra__google_cloud_platform__num_retries": 5, 
+              "extra__google_cloud_platform__project": "noble-conduit-355722"}
+  }
+}
