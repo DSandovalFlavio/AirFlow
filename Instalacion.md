@@ -37,7 +37,7 @@ Pasos para instalar Apache Airflow en WSL:
 
 - Creamos el usuario airflow
 
-        airflow users create \ 
+        airflow users create \
             --username admin \
             --firstname <FirstName> \
             --lastname <LastName> \

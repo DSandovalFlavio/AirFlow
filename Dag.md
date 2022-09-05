@@ -94,8 +94,7 @@ A su ves los operadores se pueden clasificar en:
 En la representacion del DAG existen dependencias entre tareas, estas se representan como aristas dirigidas.
 
 ```python
-task_1 >> [task_2, task_3]
-task_4 << task_3
+start >> section_1 >> section_2 >> end
 ```
 
 ![Imagen del DAG](/imag/dependencias.png)
