@@ -98,3 +98,6 @@ start >> section_1 >> section_2 >> end
 ```
 
 ![Imagen del DAG](/imag/dependencias.png)
+
+
+### Funcionamiento
