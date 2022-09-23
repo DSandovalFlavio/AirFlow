@@ -1,0 +1,22 @@
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+psql --version
+
+sudo service postgresql status - for checking the status of your database.
+sudo service postgresql start  - to start running your database.
+sudo service postgresql stop   - to stop running your database.
+
+sudo passwd postgres
+
+To run PostgreSQL with psql shell:
+
+Start your postgres service: sudo service postgresql start
+Connect to the postgres service and open the psql shell: sudo -u postgres psql
+
+
+airflow connections add \
+--conn-type postgres \
+--conn-host localhost \
+--conn-login airflow \
+--conn-password ******* \
+my_postgres 
