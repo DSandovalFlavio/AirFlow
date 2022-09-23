@@ -2,7 +2,7 @@
 
 ![Dag](imag/dependencias.png)
 
-## Description
+## Temario
 
 - [Introduccion](Introduccion.md)
 - [Instalacion](Instalacion.md)
