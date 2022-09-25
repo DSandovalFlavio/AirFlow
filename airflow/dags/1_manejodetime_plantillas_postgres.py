@@ -36,7 +36,7 @@ with DAG(**dag_args) as dag:
             "https://dumps.wikimedia.org/other/pageviews/"
             f"{year}/{year}-{month:0>2}/pageviews-{year}{month:0>2}{day:0>2}-{hour:0>2}0000.gz"
         )
-        print(f'Month: {month:0>2}, {month}')
+        print(f'The date extracted is: {year}-{month:0>2}-{day:0>2} {hour:0>2}:00:00')
         request.urlretrieve(url, output_path)
 
     # task to get pageviews
