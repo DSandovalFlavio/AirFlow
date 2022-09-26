@@ -14,10 +14,11 @@ Una buena propiedad de esta representacion del DAG es que propociona un algoritm
 
 Ejemplo de secuencia de un DAG:
 
-- Para cada tarea abierta o incompleta  haga lo siguiente
-  
+- Para cada tarea abierta o incompleta haga lo siguiente
+
   - Para cada arista apuntando hacia la tarea, verifique si la tarea upstream se ha completado.
   - Si se ha completado la tarea upstream, agregue la tarea actual a la cola de tareas pendientes de ejecución.
+
 - Ejecute las tareas en la cola de ejecucion, marcandolas como completadas una vez que se han ejecutado.
 - Repita el proceso hasta que todas las tareas sean completadas.
 
@@ -28,6 +29,7 @@ Hasta ahora hemos vista que al representar un DAG podemos dividirlo en una serie
 ## Estructura de un DAG en codigo:
 
 ### Argumentos:
+
 Son valores que son pasados a un DAG para que se apliquen a cualquier operador.
 
 ```python
@@ -39,6 +41,7 @@ default_args = {
 ```
 
 ### Task:
+
 Un Task define una unidad de trabajo dentro de un DAG.
 Es representado como un nodo en la vista del DAG.
 Esta escrito en python, donde cada Task es una implementacion de un Operator.
@@ -53,6 +56,7 @@ simple_task = BashOperator(
     default_args=default_args
 )
 ```
+
 Al estarse ejecutando un DAG, cada Task se ejecuta de forma independiente y estos task pueden tener un estado representado en la ui como los siguientes
 
 ![Imagen del DAG](/imag/estadostask.png)
@@ -67,6 +71,7 @@ Al estarse ejecutando un DAG, cada Task se ejecuta de forma independiente y esto
 - no status: Tarea no ejecutada
 
 ### Operadores
+
 Los Operadores son las clases que implementan la funcionalidad de una tarea.
 Y existen varios tipos de Operadores por ejemplo:
 
@@ -80,17 +85,18 @@ A su ves los operadores se pueden clasificar en:
 
 - Transfer Operators: Son Operadores que ejecutan una transferencia de archivos, por ejemplo:
 
-    - AzureFileTransferOperator
-    - FacebookAdsTransferOperator
-    - PrestoTransferOperator
+  - AzureFileTransferOperator
+  - FacebookAdsTransferOperator
+  - PrestoTransferOperator
 
 - Sensor Operators: Son Operadores que ejecutan un sensor, por ejemplo:
 
-    - HdfsSensorOperator
-    - HivePartitionSensorOperator
-    - TimeSensorOperator
+  - HdfsSensorOperator
+  - HivePartitionSensorOperator
+  - TimeSensorOperator
 
 ### Dependencias
+
 En la representacion del DAG existen dependencias entre tareas, estas se representan como aristas dirigidas.
 
 ```python
@@ -99,5 +105,18 @@ start >> section_1 >> section_2 >> end
 
 ![Imagen del DAG](/imag/dependencias.png)
 
+## Funcionamiento
 
-### Funcionamiento
+Cuando se ejecuta un DAG, se ejecutan las tareas en orden, es decir, se ejecuta la tarea upstream y luego la tarea downstream.
+Para que este proceso se ejecute de forma correcta Airflow se apoya de sus 3 componentes principales:
+
+- **Scheduler**: Analiza los DAGs , verifica su intervalo de programacion y ( si la programacion de los DAGs ha pasado) comienza a programar las tareas de los DAGs para su ejecucion pasandolas a los Workers.
+- **Workers**: Son los encargados de recolectar las tareas programadas por el Scheduler y ejecutarlas. Se podria decir que los Workers son los responsables de realizar el trabajo.
+-  **Airflow Webserver**: Es el encargado de mostrar la informacion de los DAGs y sus tareas en la UI.
+
+![Imagen del DAG](/imag/Funcionamiento.png)
+
+### Monitorizacion
+
+El webserver de Airflow nos da informacion detallada de los procesos y como se ejecutan dentro de su UI.
+![Imagen del DAG](/imag/informacion_airflow.png)
