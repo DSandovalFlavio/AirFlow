@@ -21,7 +21,7 @@ default_args = {
 # Definimos el DAG
 dag_args = {
     'dag_id': 'mi_primer_dag', # Identificador del DAG
-    'schedule_interval': '@daily',   # Intervalo de ejecucion del DAG
+    'schedule_interval': '@once',   # Intervalo de ejecucion del DAG
     'catchup': False,           # Evitar ejecuciones atrasadas
     'default_args': default_args, # Argumentos por defecto del DAG
 }

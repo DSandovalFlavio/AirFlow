@@ -142,3 +142,6 @@ airflow/airflow.db
 airflow/airflow.cfg
 airflow/webserver_config.py
 airflow/secrets
+
+# .idea
+.idea
