@@ -34,9 +34,9 @@ Son valores que son pasados a un DAG para que se apliquen a cualquier operador.
 
 ```python
 default_args = {
-    'owner': 'dsandovalflavio',
-    'start_date': days_ago(2),
-    'sla' : timedelta(hours=3)
+    'owner': 'dsandovalflavio', # Propietario del DAG
+    'start_date': days_ago(2),  # Fecha de inicio del DAG
+    'sla' : timedelta(hours=3) # Tiempo de tolerancia para la ejecucion del DAG
 }
 ```
 
@@ -48,12 +48,12 @@ Esta escrito en python, donde cada Task es una implementacion de un Operator.
 
 ```python
 simple_task = BashOperator(
-    task_id='simple_task',
-    depends_on_past=False,
-    bash_command='echo "Hello World"',
-    sla=timedelta(hours=3),
-    dag=dag,
-    default_args=default_args
+    task_id='simple_task', # Nombre del Task
+    depends_on_past=False, # Si el Task depende del anterior
+    bash_command='echo "Hello World"', # Comando a ejecutar
+    sla=timedelta(hours=3), # Tiempo de tolerancia para la ejecucion del Task
+    dag=dag, # DAG al que pertenece el Task, si usamos with DAG no es necesario
+    default_args=default_args # Argumentos por defecto del DAG
 )
 ```
 

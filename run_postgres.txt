@@ -20,3 +20,7 @@ airflow connections add \
 --conn-login airflow \
 --conn-password ******* \
 my_postgres 
+
+mac os
+run server
+/opt/homebrew/opt/postgresql@14/bin/postgres -D /opt/homebrew/var/postgresql@14
